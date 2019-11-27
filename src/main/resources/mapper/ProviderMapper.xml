@@ -1,0 +1,71 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kgc.ssm.mapper.ProviderMapper">
+    <select id="getProviderByproCode" resultType="Provider">
+        SELECT * FROM smbms_provider
+          <where>
+          <if test="proCode != null and proCode != ''">
+            proCode = #{proCode}
+          </if>
+           <if test="proName !=null and proName!= ''">
+               AND proName LIKE concat('%',#{proName},'%');
+           </if>
+          </where>
+    </select>
+    <insert id="addProvider" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO smbms_provider(proCode,proName,
+        proContact,proPhone,proAddress,proFax,proDesc,creationDate)
+         VALUE (#{proCode},#{proName},#{proContact},#{proPhone},#{proAddress},#{proFax},#{proDesc},#{creationDate})
+    </insert>
+    
+    <select id="getProviderById" resultType="Provider">
+        select * from smbms_provider where id = #{id};
+    </select>
+
+    <update id="updateProviderById">
+        update smbms_provider
+        <set>
+            <if test="proCode != null">
+                proCode = #{proCode},
+            </if>
+            <if test="proName != null">
+                proName = #{proName},
+            </if>
+            <if test="proDesc != null">
+                proDesc = #{proDesc},
+            </if>
+            <if test="proContact != null">
+                proContact = #{proContact},
+            </if>
+            <if test="proPhone != null">
+                proPhone = #{proPhone},
+            </if>
+            <if test="proAddress != null">
+                proAddress = #{proAddress},
+            </if>
+            <if test="proFax != null">
+                proFax = #{proFax},
+            </if>
+            <if test="createdBy != null">
+                createdBy = #{createdBy},
+            </if>
+            <if test="creationDate != null">
+                creationDate = #{creationDate},
+            </if>
+            <if test="modifyDate != null">
+                modifyDate = #{modifyDate},
+            </if>
+            <if test="modifyBy != null">
+                modifyBy = #{modifyBy},
+            </if>
+            <if test="a_companyLicPicPath != null">
+                a_companyLicPicPath = #{a_companyLicPicPath},
+            </if>
+            <if test="a_orgCodePicPath != null">
+                a_orgCodePicPath = #{a_orgCodePicPath}
+            </if>
+        </set>
+        where id = #{id};
+    </update>
+</mapper>
